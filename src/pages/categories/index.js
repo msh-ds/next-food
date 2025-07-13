@@ -1,5 +1,8 @@
 import CategoriesPage from "../../../components/templates/CategoriesPage";
 
+const BASE_URL = "https://test-server-seven-zeta.vercel.app";
+
+
 function Categories({ data }) {
   return <CategoriesPage data={data} />;
 }
@@ -13,7 +16,7 @@ export async function getServerSideProps(context) {
     query: { difficulty, time },
   } = context;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data`);
+  const res = await fetch(`${BASE_URL}/data`);
   const data = await res.json();
 
   const filteredData = data.filter((item) => {
@@ -48,7 +51,7 @@ export async function getServerSideProps(context) {
 // export async function getServerSideProps({ query }) {
 //   const { difficulty, time } = query;
 
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data`);
+//   const res = await fetch(`${BASE_URL}/data`);
 //   const data = await res.json();
 
 //   const filteredData = data.filter((item) => {

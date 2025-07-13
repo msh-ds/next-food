@@ -1,5 +1,7 @@
 import MenuPage from "../../../components/templates/MenuPage";
 
+const BASE_URL = "https://test-server-seven-zeta.vercel.app";
+
 function Menu({ data }) {
   return (
     <div>
@@ -11,11 +13,19 @@ function Menu({ data }) {
 export default Menu;
 
 export async function getStaticProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/data`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/data`);
+    const data = await res.json();
 
-  return {
-    props: { data },
-    revalidate: +process.env.REVALIDATE, //seconds
-  };
+    return {
+      props: { data },
+      revalidate: 3600, // seconds
+    };
+  } catch (error) {
+    console.error("Error fetching menu data:", error);
+    return {
+      props: { data: [] },
+      revalidate: 3600,
+    };
+  }
 }
